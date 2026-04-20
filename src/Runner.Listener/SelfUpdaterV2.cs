@@ -132,9 +132,11 @@ namespace GitHub.Runner.Listener
                 Busy = false;
             }
 #else
+#pragma warning disable CS1998 // This async method lacks 'await' operators and will run synchronously. 
             // UpdateRunnerUpdateStateAsync() should only be used to report update state during the update process, which hereby is disabled for hardened-runner fork. 
             Trace.Info($"Self update (v2) disabled (hardened-runner fork). Ignoring update message with target version: {updateMessage.TargetVersion}");
             return false;
+#pragma warning restore CS1998
 #endif
         }
 

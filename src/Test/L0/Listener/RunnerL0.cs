@@ -443,6 +443,7 @@ namespace GitHub.Runner.Common.Tests.Listener
         [Fact]
         [Trait("Level", "L0")]
         [Trait("Category", "Runner")]
+        [Trait("Feature", "SelfUpdate")]
         public async Task TestRunOnceHandleUpdateMessage()
         {
             using (var hc = new TestHostContext(this))

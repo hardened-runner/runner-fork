@@ -78,6 +78,7 @@ namespace GitHub.Runner.Common.Tests.Listener
         [Fact]
         [Trait("Level", "L0")]
         [Trait("Category", "Runner")]
+        [Trait("Feature", "SelfUpdate")]
         public async void TestSelfUpdateAsync()
         {
             try
@@ -137,6 +138,7 @@ namespace GitHub.Runner.Common.Tests.Listener
         [Fact]
         [Trait("Level", "L0")]
         [Trait("Category", "Runner")]
+        [Trait("Feature", "SelfUpdate")]
         public async void TestSelfUpdateAsync_NoUpdateOnOldVersion()
         {
             try
@@ -188,6 +190,7 @@ namespace GitHub.Runner.Common.Tests.Listener
         [Fact]
         [Trait("Level", "L0")]
         [Trait("Category", "Runner")]
+        [Trait("Feature", "SelfUpdate")]
         public async void TestSelfUpdateAsync_DownloadRetry()
         {
             try
@@ -241,6 +244,7 @@ namespace GitHub.Runner.Common.Tests.Listener
         [Fact]
         [Trait("Level", "L0")]
         [Trait("Category", "Runner")]
+        [Trait("Feature", "SelfUpdate")]
         public async void TestSelfUpdateAsync_ValidateHash()
         {
             try

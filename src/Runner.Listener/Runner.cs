@@ -643,7 +643,9 @@ namespace GitHub.Runner.Listener
                                 }
       
 #else
+#pragma warning disable CS1998 // This async method lacks 'await' operators and will run synchronously.
                                 Trace.Info("AgentRefreshMessage received but github's auto-update is disabled (hardened-runner fork). Ignoring.");                      
+#pragma warning restore CS1998
 #endif // ALLOW_UNSAFE_SELF_UPDATE
                             }
                             else if (string.Equals(message.MessageType, RunnerRefreshMessage.MessageType, StringComparison.OrdinalIgnoreCase))
