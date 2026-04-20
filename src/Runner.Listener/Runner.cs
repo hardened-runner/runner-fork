@@ -606,12 +606,13 @@ namespace GitHub.Runner.Listener
                             HostContext.WritePerfCounter($"MessageReceived_{message.MessageType}");
                             if (string.Equals(message.MessageType, AgentRefreshMessage.MessageType, StringComparison.OrdinalIgnoreCase))
                             {
+#if ALLOW_UNSAFE_SELF_UPDATE
                                 if (autoUpdateInProgress == false)
                                 {
                                     autoUpdateInProgress = true;
                                     AgentRefreshMessage runnerUpdateMessage = JsonUtility.FromString<AgentRefreshMessage>(message.Body);
 
-#if DEBUG
+#if DELBUG 
                                     // Can mock the update for testing
                                     if (StringUtil.ConvertToBoolean(Environment.GetEnvironmentVariable("GITHUB_ACTIONS_RUNNER_IS_MOCK_UPDATE")))
                                     {
@@ -631,7 +632,7 @@ namespace GitHub.Runner.Listener
                                             }
                                         }
                                     }
-#endif
+#endif // DEBUG
                                     var selfUpdater = HostContext.GetService<ISelfUpdater>();
                                     selfUpdateTask = selfUpdater.SelfUpdate(runnerUpdateMessage, jobDispatcher, false, HostContext.RunnerShutdownToken);
                                     Trace.Info("Refresh message received, kick-off selfupdate background process.");
@@ -640,9 +641,15 @@ namespace GitHub.Runner.Listener
                                 {
                                     Trace.Info("Refresh message received, skip autoupdate since a previous autoupdate is already running.");
                                 }
+      
+#else
+                                Trace.Info("AgentRefreshMessage received but github's auto-update is disabled (hardened-runner fork). Ignoring.");                      
+#endif // ALLOW_UNSAFE_SELF_UPDATE
                             }
                             else if (string.Equals(message.MessageType, RunnerRefreshMessage.MessageType, StringComparison.OrdinalIgnoreCase))
                             {
+#if ALLOW_UNSAFE_SELF_UPDATE
+
                                 if (autoUpdateInProgress == false)
                                 {
                                     autoUpdateInProgress = true;
@@ -656,6 +663,9 @@ namespace GitHub.Runner.Listener
                                 {
                                     Trace.Info("Refresh message received, skip autoupdate since a previous autoupdate is already running.");
                                 }
+#else
+                                Trace.Info("RunnerRefreshMessage received but github's auto-update is disabled (hardened-runner fork). Ignoring.");
+#endif
                             }
                             else if (string.Equals(message.MessageType, JobRequestMessageTypes.PipelineAgentJobRequest, StringComparison.OrdinalIgnoreCase))
                             {

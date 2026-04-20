@@ -56,6 +56,7 @@ namespace GitHub.Runner.Listener
 
         public async Task<bool> SelfUpdate(RunnerRefreshMessage updateMessage, IJobDispatcher jobDispatcher, bool restartInteractiveRunner, CancellationToken token)
         {
+#if ALLOW_UNSAFE_SELF_UPDATE
             Busy = true;
             try
             {
@@ -130,6 +131,11 @@ namespace GitHub.Runner.Listener
                 _terminal.WriteLine("Runner update process finished.");
                 Busy = false;
             }
+#else
+            // UpdateRunnerUpdateStateAsync() should only be used to report update state during the update process, which hereby is disabled for hardened-runner fork. 
+            Trace.Info($"Self update (v2) disabled (hardened-runner fork). Ignoring update message with target version: {updateMessage.TargetVersion}");
+            return false;
+#endif
         }
 
         /// <summary>
