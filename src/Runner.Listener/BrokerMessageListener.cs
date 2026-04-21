@@ -99,7 +99,7 @@ namespace GitHub.Runner.Listener
             {
                 Id = _settings.AgentId,
                 Name = _settings.AgentName,
-                Version = BuildConstants.RunnerPackage.Version,
+                Version = HardenedRunnerBuildConstants.SpoofedVersion,
                 OSDescription = RuntimeInformation.OSDescription,
             };
             var currentProcess = Process.GetCurrentProcess();
@@ -292,7 +292,7 @@ namespace GitHub.Runner.Listener
 
                     message = await _brokerServer.GetRunnerMessageAsync(_session.SessionId,
                                                                         _runnerStatus,
-                                                                        BuildConstants.RunnerPackage.Version,
+                                                                        HardenedRunnerBuildConstants.SpoofedVersion,
                                                                         VarUtil.OS,
                                                                         VarUtil.OSArchitecture,
                                                                         _settings.DisableUpdate,
@@ -426,7 +426,7 @@ namespace GitHub.Runner.Listener
                 runnerRequestId,
                 _session.SessionId,
                 _runnerStatus,
-                BuildConstants.RunnerPackage.Version,
+                HardenedRunnerBuildConstants.SpoofedVersion,
                 VarUtil.OS,
                 VarUtil.OSArchitecture,
                 linkedCts.Token);
