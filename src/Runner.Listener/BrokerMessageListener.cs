@@ -172,7 +172,7 @@ namespace GitHub.Runner.Listener
                     {
                         _migratedSettingsRetryCount++;
                         Trace.Warning($"Migrated settings retry {_migratedSettingsRetryCount} of {_maxMigratedSettingsRetries}");
-                        
+
                         if (_migratedSettingsRetryCount >= _maxMigratedSettingsRetries)
                         {
                             Trace.Warning("Reached maximum retry attempts for migrated settings. Returning failure to try default settings.");

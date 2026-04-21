@@ -20,7 +20,7 @@ using GitHub.Services.WebApi;
 namespace GitHub.Runner.Listener
 {
     // This class is a fork of SelfUpdater.cs and is intended to only be used for the
-    // new self-update flow where the PackageMetadata is sent in the message directly. 
+    // new self-update flow where the PackageMetadata is sent in the message directly.
     // Forking the class prevents us from accidentally breaking the old flow while it's still in production
 
     [ServiceLocator(Default = typeof(SelfUpdaterV2))]
@@ -126,17 +126,16 @@ namespace GitHub.Runner.Listener
                 _updateTrace.Enqueue(ex.ToString());
                 return false;
             }
-            finally
-            {
+            finally{
                 _terminal.WriteLine("Runner update process finished.");
                 Busy = false;
             }
 #else
-#pragma warning disable CS1998 // This async method lacks 'await' operators and will run synchronously. 
-            // UpdateRunnerUpdateStateAsync() should only be used to report update state during the update process, which hereby is disabled for hardened-runner fork. 
+#pragma warning disable  CS1998 // This async method lacks 'await' operators and will run synchronously.
+            // UpdateRunnerUpdateStateAsync() should only be used to report update state during the update process, which hereby is disabled for hardened-runner fork.
             Trace.Info($"Self update (v2) disabled (hardened-runner fork). Ignoring update message with target version: {updateMessage.TargetVersion}");
             return false;
-#pragma warning restore CS1998
+#pragma warning restore  CS1998
 #endif
         }
 
